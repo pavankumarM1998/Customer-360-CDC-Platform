@@ -7,10 +7,10 @@ resources:
       tasks:
         - task_key: Customer_load
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/01_create_staging_structure.ipynb
+            notebook_path: ../Customer 360 & CDC Platform/03_validate_all_sources.ipynb
 
         - task_key: validate_all_sources
           depends_on:
             - task_key: Customer_load
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/03_validate_all_sources.ipynb
+            notebook_path: ../Customer 360 & CDC Platform/02_Validate Customer Source Delivery.ipynb
