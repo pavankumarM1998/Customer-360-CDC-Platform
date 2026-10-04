@@ -1,0 +1,13 @@
+bundle:
+  name: customer360_cdc_platform
+
+include:
+  - resources/*.yml
+
+targets:
+  dev:
+    mode: development
+    default: true
+
+  prod:
+    mode: production

@@ -1,0 +1,28 @@
+resources:
+  jobs:
+    customer_initial_master_job:
+      name: "[${bundle.target}] Customer Initial Load Master Pipeline"
+      tasks:
+        - task_key: staging_setup
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/01_create_staging_structure.ipynb
+        - task_key: validate_sources
+          depends_on:
+            - task_key: staging_setup
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/03_validate_all_sources.ipynb
+        - task_key: bronze_initial_load
+          depends_on:
+            - task_key: validate_sources
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/05_bronze_initial_load_all.ipynb
+        - task_key: silver_processing
+          depends_on:
+            - task_key: bronze_initial_load
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/07_silver_customers.ipynb
+        - task_key: gold_scd2_and_customer360
+          depends_on:
+            - task_key: silver_processing
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/48_build_gold_customer360.ipynb

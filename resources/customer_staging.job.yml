@@ -1,0 +1,8 @@
+resources:
+  jobs:
+    customer_staging_job:
+      name: "[${bundle.target}] Customer Staging Setup Job"
+      tasks:
+        - task_key: create_staging_structure
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/01_create_staging_structure.ipynb

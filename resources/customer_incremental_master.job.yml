@@ -1,0 +1,28 @@
+resources:
+  jobs:
+    customer_incremental_master_job:
+      name: "[${bundle.target}] Customer Incremental CDC Master Pipeline"
+      tasks:
+        - task_key: create_cdc_control
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/23_create_cdc_control.ipynb
+        - task_key: bronze_incremental_load
+          depends_on:
+            - task_key: create_cdc_control
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/24_bronze_customers_incremental.ipynb
+        - task_key: classify_cdc_changes
+          depends_on:
+            - task_key: bronze_incremental_load
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/25_classify_customer_cdc.ipynb
+        - task_key: update_scd2_versions
+          depends_on:
+            - task_key: classify_cdc_changes
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/44_insert_customer_scd2_versions.ipynb
+        - task_key: archive_processed_files
+          depends_on:
+            - task_key: update_scd2_versions
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/49_archive_processed_source_files.ipynb

@@ -1,0 +1,13 @@
+resources:
+  jobs:
+    customer_gold_job:
+      name: "[${bundle.target}] Customer Gold Aggregation & SCD2 Job"
+      tasks:
+        - task_key: build_dim_product
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/46_build_dim_product.ipynb
+        - task_key: build_gold_customer360
+          depends_on:
+            - task_key: build_dim_product
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/48_build_gold_customer360.ipynb

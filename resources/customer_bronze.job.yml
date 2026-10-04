@@ -1,0 +1,13 @@
+resources:
+  jobs:
+    customer_bronze_job:
+      name: "[${bundle.target}] Customer Bronze Ingestion Job"
+      tasks:
+        - task_key: bronze_initial_load
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/05_bronze_initial_load_all.ipynb
+        - task_key: bronze_reconciliation
+          depends_on:
+            - task_key: bronze_initial_load
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/06_bronze_reconciliation.ipynb

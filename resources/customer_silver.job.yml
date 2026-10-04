@@ -1,0 +1,13 @@
+resources:
+  jobs:
+    customer_silver_job:
+      name: "[${bundle.target}] Customer Silver Processing Job"
+      tasks:
+        - task_key: silver_customers
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/07_silver_customers.ipynb
+        - task_key: reconcile_silver_customers
+          depends_on:
+            - task_key: silver_customers
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/08_reconcile_silver_customers.ipynb
