@@ -1,13 +1,105 @@
 resources:
   jobs:
-    customer_silver_job:
-      name: "[${bundle.target}] Customer Silver Processing Job"
+    Customer_SILVER_JOB:
+      name: "Customer_SILVER JOB"
       tasks:
+        # Customer Path
         - task_key: silver_customers
           notebook_task:
             notebook_path: ../Customer 360 & CDC Platform/07_silver_customers.ipynb
-        - task_key: reconcile_silver_customers
+
+        - task_key: reconcile_customers
           depends_on:
             - task_key: silver_customers
           notebook_task:
             notebook_path: ../Customer 360 & CDC Platform/08_reconcile_silver_customers.ipynb
+
+        # Address Path (depends on reconcile_customers)
+        - task_key: silver_addresses
+          depends_on:
+            - task_key: reconcile_customers
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/09__silver_addresses.ipynb
+
+        - task_key: reconcile_address
+          depends_on:
+            - task_key: silver_addresses
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/10__reconcile_silver_addresses.ipynb
+
+        # Subscriptions Path (depends on reconcile_customers)
+        - task_key: silver_subscriptions
+          depends_on:
+            - task_key: reconcile_customers
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/11_silver_subscriptions.ipynb
+
+        - task_key: reconcile_subscriptions
+          depends_on:
+            - task_key: silver_subscriptions
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/12_reconcile_silver_subscriptions.ipynb
+
+        # Products Path (Independent root)
+        - task_key: silver_products
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/13_silver_products.ipynb
+
+        - task_key: reconcile_products
+          depends_on:
+            - task_key: silver_products
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/14_reconcile_silver_products.ipynb
+
+        # Orders Path (depends on reconcile_address)
+        - task_key: silver_orders
+          depends_on:
+            - task_key: reconcile_address
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/15_silver_orders.ipynb
+
+        - task_key: reconcile_orders
+          depends_on:
+            - task_key: silver_orders
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/16_reconcile_silver_orders.ipynb
+
+        # Order Items Path (depends on reconcile_orders AND reconcile_products)
+        - task_key: silver_order_items
+          depends_on:
+            - task_key: reconcile_orders
+            - task_key: reconcile_products
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/17_silver_order_items.ipynb
+
+        - task_key: reconcile_order_items
+          depends_on:
+            - task_key: silver_order_items
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/18_reconcile_silver_order_items.ipynb
+
+        # Payments Path (depends on reconcile_orders)
+        - task_key: silver_payments
+          depends_on:
+            - task_key: reconcile_orders
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/19_silver_payments.ipynb
+
+        - task_key: reconcile_payments
+          depends_on:
+            - task_key: silver_payments
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/20_reconcile_silver_payments.ipynb
+
+        # Support Tickets Path (depends on reconcile_orders)
+        - task_key: silver_support_tickets
+          depends_on:
+            - task_key: reconcile_orders
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/21_silver_support_tickets.ipynb
+
+        - task_key: reconcile_support
+          depends_on:
+            - task_key: silver_support_tickets
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/22_reconcile_silver_support_tickets.ipynb

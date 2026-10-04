@@ -1,8 +1,16 @@
 resources:
   jobs:
-    customer_staging_job:
-      name: "[${bundle.target}] Customer Staging Setup Job"
+    Customer_Staging:
+      name: "Customer_Staging"
+      queue:
+        enabled: true
       tasks:
-        - task_key: create_staging_structure
+        - task_key: Customer_load
           notebook_task:
             notebook_path: ../Customer 360 & CDC Platform/01_create_staging_structure.ipynb
+
+        - task_key: validate_all_sources
+          depends_on:
+            - task_key: Customer_load
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/03_validate_all_sources.ipynb

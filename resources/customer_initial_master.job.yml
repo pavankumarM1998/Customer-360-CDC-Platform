@@ -1,28 +1,26 @@
 resources:
   jobs:
-    customer_initial_master_job:
-      name: "[${bundle.target}] Customer Initial Load Master Pipeline"
+    customer360_initial_master_pipeline:
+      name: "customer360_initial_master_pipeline"
       tasks:
-        - task_key: staging_setup
-          notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/01_create_staging_structure.ipynb
-        - task_key: validate_sources
+        - task_key: Staging
+          run_job_task:
+            job_id: ${resources.jobs.Customer_Staging.id}
+
+        - task_key: bronze_layer
           depends_on:
-            - task_key: staging_setup
-          notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/03_validate_all_sources.ipynb
-        - task_key: bronze_initial_load
+            - task_key: Staging
+          run_job_task:
+            job_id: ${resources.jobs.Customer_BRONZE_JOB.id}
+
+        - task_key: silver_layer
           depends_on:
-            - task_key: validate_sources
-          notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/05_bronze_initial_load_all.ipynb
-        - task_key: silver_processing
+            - task_key: bronze_layer
+          run_job_task:
+            job_id: ${resources.jobs.Customer_SILVER_JOB.id}
+
+        - task_key: gold_layer
           depends_on:
-            - task_key: bronze_initial_load
-          notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/07_silver_customers.ipynb
-        - task_key: gold_scd2_and_customer360
-          depends_on:
-            - task_key: silver_processing
-          notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/48_build_gold_customer360.ipynb
+            - task_key: silver_layer
+          run_job_task:
+            job_id: ${resources.jobs.Customer_gold_job.id}

@@ -1,13 +1,20 @@
 resources:
   jobs:
-    customer_gold_job:
-      name: "[${bundle.target}] Customer Gold Aggregation & SCD2 Job"
+    Customer_gold_job:
+      name: "Customer_gold_job"
       tasks:
-        - task_key: build_dim_product
+        - task_key: customer_scd2_create
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/46_build_dim_product.ipynb
-        - task_key: build_gold_customer360
+            notebook_path: ../Customer 360 & CDC Platform/40_create_customer_scd2.ipynb
+
+        - task_key: customer_scd2_baseline
           depends_on:
-            - task_key: build_dim_product
+            - task_key: customer_scd2_create
+          notebook_task:
+            notebook_path: ../Customer 360 & CDC Platform/41_initial_customer_scd2_load.ipynb
+
+        - task_key: gold_build
+          depends_on:
+            - task_key: customer_scd2_baseline
           notebook_task:
             notebook_path: ../Customer 360 & CDC Platform/48_build_gold_customer360.ipynb
