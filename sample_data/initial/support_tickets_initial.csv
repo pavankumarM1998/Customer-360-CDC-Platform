@@ -1,0 +1,3 @@
+ticket_id,customer_id,order_id,subject,priority,ticket_status,channel,opened_at,resolved_at,created_at,updated_at
+TCK_0001,CUST_0001,ORD_0001,License activation question,LOW,RESOLVED,PORTAL,2024-01-20T11:00:00Z,2024-01-20T12:30:00Z,2024-01-20T11:00:00Z,2024-01-20T12:30:00Z
+TCK_0002,CUST_0004,ORD_0002,Pending account review,MEDIUM,OPEN,EMAIL,2024-01-19T09:00:00Z,,2024-01-19T09:00:00Z,2024-01-19T09:00:00Z

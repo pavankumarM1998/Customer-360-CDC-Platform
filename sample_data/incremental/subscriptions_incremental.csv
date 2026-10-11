@@ -1,0 +1,2 @@
+subscription_id,customer_id,plan_name,billing_frequency,amount,status,start_date,renewal_date,created_at,updated_at
+SUB_0001,CUST_0001,Enterprise Premium,ANNUAL,3499.00,ACTIVE,2024-01-15,2025-02-15,2024-01-15T10:00:00Z,2024-02-01T15:00:00Z

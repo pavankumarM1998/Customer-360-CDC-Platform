@@ -8,118 +8,118 @@ resources:
         # -----------------------------------------------------------------
         - task_key: customers_incremental
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/24_bronze_customers_incremental.ipynb
+            notebook_path: ../notebooks/24_bronze_customers_incremental.ipynb
 
         - task_key: classify_customer_cdc
           depends_on:
             - task_key: customers_incremental
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/25_classify_customer_cdc.ipynb
+            notebook_path: ../notebooks/25_classify_customer_cdc.ipynb
 
         - task_key: reconcile_customer_cdc
           depends_on:
             - task_key: classify_customer_cdc
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/26_reconcile_customer_cdc.ipynb
+            notebook_path: ../notebooks/26_reconcile_customer_cdc.ipynb
 
         - task_key: customer_merge_reconcile
           depends_on:
             - task_key: reconcile_customer_cdc
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/27_update_customer_watermark.ipynb
+            notebook_path: ../notebooks/27_update_customer_watermark.ipynb
 
         - task_key: detect_customer_scd2_changes
           depends_on:
             - task_key: customer_merge_reconcile
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/42_detect_customer_scd2_changes.ipynb
+            notebook_path: ../notebooks/42_detect_customer_scd2_changes.ipynb
 
         - task_key: expire_customer_scd2
           depends_on:
             - task_key: detect_customer_scd2_changes
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/43_expire_customer_scd2_versions.ipynb
+            notebook_path: ../notebooks/43_expire_customer_scd2_versions.ipynb
 
         - task_key: insert_customer_scd2
           depends_on:
             - task_key: expire_customer_scd2
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/44_insert_customer_scd2_versions.ipynb
+            notebook_path: ../notebooks/44_insert_customer_scd2_versions.ipynb
 
         - task_key: reconcile_customer_scd2
           depends_on:
             - task_key: insert_customer_scd2
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/45_reconcile_customer_scd2.ipynb
+            notebook_path: ../notebooks/45_reconcile_customer_scd2.ipynb
 
         # -----------------------------------------------------------------
         # Address Branch
         # -----------------------------------------------------------------
         - task_key: addresses_incremental
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/29__bronze_addresses_incremental.ipynb
+            notebook_path: ../notebooks/29__bronze_addresses_incremental.ipynb
 
         - task_key: classify_address_cdc
           depends_on:
             - task_key: addresses_incremental
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/30_classify_address_cdc.ipynb
+            notebook_path: ../notebooks/30_classify_address_cdc.ipynb
 
         - task_key: merge_address_cdc
           depends_on:
             - task_key: classify_address_cdc
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/31_merge_address_cdc.ipynb
+            notebook_path: ../notebooks/31_merge_address_cdc.ipynb
 
         - task_key: reconcile_address_cdc
           depends_on:
             - task_key: merge_address_cdc
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/32_Reconcile Address CDC.ipynb
+            notebook_path: ../notebooks/32_Reconcile Address CDC.ipynb
 
         - task_key: update_address_watermark
           depends_on:
             - task_key: reconcile_address_cdc
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/33_update_address_watermark.ipynb
+            notebook_path: ../notebooks/33_update_address_watermark.ipynb
 
         # -----------------------------------------------------------------
         # Subscription Branch
         # -----------------------------------------------------------------
         - task_key: subscriptions_incremental
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/34_bronze_subscriptions_incremental.ipynb
+            notebook_path: ../notebooks/34_bronze_subscriptions_incremental.ipynb
 
         - task_key: classify_subscription_cdc
           depends_on:
             - task_key: subscriptions_incremental
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/35_classify_subscription_cdc.ipynb
+            notebook_path: ../notebooks/35_classify_subscription_cdc.ipynb
 
         - task_key: merge_subscription_cdc
           depends_on:
             - task_key: classify_subscription_cdc
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/36__merge_subscription_cdc.ipynb
+            notebook_path: ../notebooks/36__merge_subscription_cdc.ipynb
 
         - task_key: reconcile_subscription_cdc
           depends_on:
             - task_key: merge_subscription_cdc
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/37__reconcile_subscription_cdc.ipynb
+            notebook_path: ../notebooks/37__reconcile_subscription_cdc.ipynb
 
         - task_key: update_subscription_watermark
           depends_on:
             - task_key: reconcile_subscription_cdc
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/38_update_subscription_watermark.ipynb
+            notebook_path: ../notebooks/38_update_subscription_watermark.ipynb
 
         # -----------------------------------------------------------------
         # Parameterized Remaining Entity CDC
         # -----------------------------------------------------------------
         - task_key: products_cdc
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/39_remaining_cdc.ipynb
+            notebook_path: ../notebooks/39_remaining_cdc.ipynb
             base_parameters:
               ENTITY: products
 
@@ -128,7 +128,7 @@ resources:
             - task_key: customer_merge_reconcile
             - task_key: update_address_watermark
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/39_remaining_cdc.ipynb
+            notebook_path: ../notebooks/39_remaining_cdc.ipynb
             base_parameters:
               ENTITY: orders
 
@@ -137,7 +137,7 @@ resources:
             - task_key: orders_cdc
             - task_key: products_cdc
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/39_remaining_cdc.ipynb
+            notebook_path: ../notebooks/39_remaining_cdc.ipynb
             base_parameters:
               ENTITY: order_items
 
@@ -145,7 +145,7 @@ resources:
           depends_on:
             - task_key: orders_cdc
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/39_remaining_cdc.ipynb
+            notebook_path: ../notebooks/39_remaining_cdc.ipynb
             base_parameters:
               ENTITY: payments
 
@@ -153,7 +153,7 @@ resources:
           depends_on:
             - task_key: orders_cdc
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/39_remaining_cdc.ipynb
+            notebook_path: ../notebooks/39_remaining_cdc.ipynb
             base_parameters:
               ENTITY: support_tickets
 
@@ -170,10 +170,10 @@ resources:
             - task_key: order_items_cdc
             - task_key: products_cdc
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/48_build_gold_customer360.ipynb
+            notebook_path: ../notebooks/48_build_gold_customer360.ipynb
 
         - task_key: archive_source_files
           depends_on:
             - task_key: gold_refresh
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/49_archive_processed_source_files.ipynb
+            notebook_path: ../notebooks/49_archive_processed_source_files.ipynb

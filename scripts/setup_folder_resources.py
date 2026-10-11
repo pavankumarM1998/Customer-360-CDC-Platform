@@ -22,7 +22,7 @@ ENTITIES = [
     "support_tickets"
 ]
 
-SUBFOLDERS = ["initial", "incremental", "archive"]
+SUBFOLDERS = ["initial", "incremental", "archive", "rejected"]
 
 def setup_volume_directories():
     print(f"Provisioning Unity Catalog Volume directories under: {BASE_VOLUME_PATH}\n" + "="*70)

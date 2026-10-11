@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,email,phone,date_of_birth,customer_status,created_at,updated_at
+CUST_0001,John,Doe,john.doe@example.com,+1-555-0101,1985-04-12,ACTIVE,2024-01-15T10:00:00Z,2024-01-15T10:00:00Z
+CUST_0002,Jane,Smith,jane.smith@example.com,+1-555-0102,1990-08-23,ACTIVE,2024-01-16T11:30:00Z,2024-01-16T11:30:00Z
+CUST_0003,Robert,Johnson,r.johnson@example.com,+1-555-0103,1978-11-05,ACTIVE,2024-01-17T09:15:00Z,2024-01-17T09:15:00Z
+CUST_0004,Emily,Davis,emily.davis@example.com,+1-555-0104,1995-02-18,PENDING,2024-01-18T14:45:00Z,2024-01-18T14:45:00Z
+CUST_0005,Michael,Brown,m.brown@example.com,+1-555-0105,1982-07-30,ACTIVE,2024-01-19T08:20:00Z,2024-01-19T08:20:00Z

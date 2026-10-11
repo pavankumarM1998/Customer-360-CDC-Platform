@@ -1,0 +1,3 @@
+customer_id,first_name,last_name,email,phone,date_of_birth,customer_status,created_at,updated_at
+CUST_0001,John,Doe,john.doe.new@example.com,+1-555-9999,1985-04-12,PREMIUM,2024-01-15T10:00:00Z,2024-02-01T15:00:00Z
+CUST_0006,Sarah,Wilson,sarah.w@example.com,+1-555-0106,1992-09-14,ACTIVE,2024-02-01T16:00:00Z,2024-02-01T16:00:00Z

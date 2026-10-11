@@ -4,10 +4,27 @@ bundle:
 include:
   - resources/*.yml
 
+variables:
+  catalog:
+    description: "Unity Catalog target catalog name"
+    default: "customer360_dev"
+  staging_volume_path:
+    description: "Base path for Unity Catalog staging volume landing files"
+    default: "/Volumes/customer360_dev/staging/source_files"
+
 targets:
   dev:
     mode: development
     default: true
+    workspace:
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+
+  staging:
+    mode: development
+    workspace:
+      root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
 
   prod:
     mode: production
+    workspace:
+      root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}

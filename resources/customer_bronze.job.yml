@@ -5,15 +5,15 @@ resources:
       tasks:
         - task_key: Customer_raw
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/04_bronze_customers_initial_load.ipynb
+            notebook_path: ../notebooks/04_bronze_customers_initial_load.ipynb
 
         - task_key: all_table_load
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/05_bronze_initial_load_all.ipynb
+            notebook_path: ../notebooks/05_bronze_initial_load_all.ipynb
 
         - task_key: reconcile_All_tables
           depends_on:
             - task_key: Customer_raw
             - task_key: all_table_load
           notebook_task:
-            notebook_path: ../Customer 360 & CDC Platform/06_bronze_reconciliation.ipynb
+            notebook_path: ../notebooks/06_bronze_reconciliation.ipynb
