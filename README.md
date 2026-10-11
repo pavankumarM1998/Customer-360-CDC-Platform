@@ -15,12 +15,9 @@ Customer-360-CDC-Platform/
 ├── Customer 360 & CDC Platform_old/ # Databricks Notebooks (Archived)
 │
 ├── resources/                        # Databricks Asset Bundle (DAB) Workflow / Job YAMLs
-│   ├── customer_staging.job.yml
-│   ├── customer_bronze.job.yml
-│   ├── customer_silver.job.yml
-│   ├── customer_gold.job.yml
-│   ├── customer_initial_master.job.yml
-│   └── customer_incremental_master.job.yml
+│   ├── customer360_initial_pipeline.job.yml      # End-to-end Initial Load Pipeline
+│   ├── customer360_incremental_pipeline.job.yml  # End-to-end CDC Incremental Pipeline
+│   └── old/                                      # Historical Job YAMLs (Archived)
 │
 ├── scripts/                          # Environment & Resource Setup Scripts
 │   ├── setup_folder_resources.py     # Unity Catalog Volume folder structure initializer
