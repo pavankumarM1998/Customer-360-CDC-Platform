@@ -1,0 +1,16 @@
+resources:
+  jobs:
+    customer360_maintenance_pipeline:
+      name: customer360_maintenance_pipeline
+      tasks:
+        - task_key: optimize_delta_tables
+          notebook_task:
+            notebook_path: ../notebooks/14_optimization.py
+        - task_key: platform_monitoring
+          depends_on:
+            - task_key: optimize_delta_tables
+          notebook_task:
+            notebook_path: ../notebooks/13_monitoring.py
+      queue:
+        enabled: true
+      performance_target: PERFORMANCE_OPTIMIZED

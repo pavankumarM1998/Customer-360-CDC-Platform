@@ -5,92 +5,83 @@ resources:
       tasks:
         - task_key: staging_validation
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/01_staging_validation
+            notebook_path: ../notebooks/01_staging_validation.py
             base_parameters:
               ENTITY: ALL
               LOAD_TYPE: INCREMENTAL
               STRICT_INITIAL_COUNTS: "false"
-            source: WORKSPACE
         - task_key: bronze_customers
           depends_on:
             - task_key: staging_validation
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/02_bronze_ingestion
+            notebook_path: ../notebooks/02_bronze_ingestion.py
             base_parameters:
               ENTITY: customers
               LOAD_TYPE: INCREMENTAL
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: bronze_addresses
           depends_on:
             - task_key: staging_validation
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/02_bronze_ingestion
+            notebook_path: ../notebooks/02_bronze_ingestion.py
             base_parameters:
               ENTITY: addresses
               LOAD_TYPE: INCREMENTAL
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: bronze_subscriptions
           depends_on:
             - task_key: staging_validation
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/02_bronze_ingestion
+            notebook_path: ../notebooks/02_bronze_ingestion.py
             base_parameters:
               ENTITY: subscriptions
               LOAD_TYPE: INCREMENTAL
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: bronze_products
           depends_on:
             - task_key: staging_validation
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/02_bronze_ingestion
+            notebook_path: ../notebooks/02_bronze_ingestion.py
             base_parameters:
               ENTITY: products
               LOAD_TYPE: INCREMENTAL
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: bronze_orders
           depends_on:
             - task_key: staging_validation
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/02_bronze_ingestion
+            notebook_path: ../notebooks/02_bronze_ingestion.py
             base_parameters:
               ENTITY: orders
               LOAD_TYPE: INCREMENTAL
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: bronze_order_items
           depends_on:
             - task_key: staging_validation
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/02_bronze_ingestion
+            notebook_path: ../notebooks/02_bronze_ingestion.py
             base_parameters:
               ENTITY: order_items
               LOAD_TYPE: INCREMENTAL
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: bronze_payments
           depends_on:
             - task_key: staging_validation
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/02_bronze_ingestion
+            notebook_path: ../notebooks/02_bronze_ingestion.py
             base_parameters:
               ENTITY: payments
               LOAD_TYPE: INCREMENTAL
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: bronze_support_tickets
           depends_on:
             - task_key: staging_validation
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/02_bronze_ingestion
+            notebook_path: ../notebooks/02_bronze_ingestion.py
             base_parameters:
               ENTITY: support_tickets
               LOAD_TYPE: INCREMENTAL
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: bronze_reconciliation
           depends_on:
             - task_key: bronze_products
@@ -102,301 +93,267 @@ resources:
             - task_key: bronze_orders
             - task_key: bronze_support_tickets
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/03_bronze_reconciliation
+            notebook_path: ../notebooks/03_bronze_reconciliation.py
             base_parameters:
               ENTITY: ALL
-            source: WORKSPACE
         - task_key: classify_customers
           depends_on:
             - task_key: bronze_reconciliation
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/06_cdc_classification
+            notebook_path: ../notebooks/06_cdc_classification.py
             base_parameters:
               ENTITY: customers
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: merge_customers
           depends_on:
             - task_key: classify_customers
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/07_cdc_merge
+            notebook_path: ../notebooks/07_cdc_merge.py
             base_parameters:
               ENTITY: customers
-            source: WORKSPACE
         - task_key: reconcile_customers
           depends_on:
             - task_key: merge_customers
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/05_silver_reconciliation
+            notebook_path: ../notebooks/05_silver_reconciliation.py
             base_parameters:
               ENTITY: customers
               MODE: INCREMENTAL
-            source: WORKSPACE
         - task_key: watermark_customers
           depends_on:
             - task_key: reconcile_customers
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/08_watermark_update
+            notebook_path: ../notebooks/08_watermark_update.py
             base_parameters:
               ENTITY: customers
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: classify_products
           depends_on:
             - task_key: bronze_reconciliation
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/06_cdc_classification
+            notebook_path: ../notebooks/06_cdc_classification.py
             base_parameters:
               ENTITY: products
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: merge_products
           depends_on:
             - task_key: classify_products
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/07_cdc_merge
+            notebook_path: ../notebooks/07_cdc_merge.py
             base_parameters:
               ENTITY: products
-            source: WORKSPACE
         - task_key: reconcile_products
           depends_on:
             - task_key: merge_products
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/05_silver_reconciliation
+            notebook_path: ../notebooks/05_silver_reconciliation.py
             base_parameters:
               ENTITY: products
               MODE: INCREMENTAL
-            source: WORKSPACE
         - task_key: watermark_products
           depends_on:
             - task_key: reconcile_products
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/08_watermark_update
+            notebook_path: ../notebooks/08_watermark_update.py
             base_parameters:
               ENTITY: products
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: classify_addresses
           depends_on:
             - task_key: reconcile_customers
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/06_cdc_classification
+            notebook_path: ../notebooks/06_cdc_classification.py
             base_parameters:
               ENTITY: addresses
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: merge_addresses
           depends_on:
             - task_key: classify_addresses
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/07_cdc_merge
+            notebook_path: ../notebooks/07_cdc_merge.py
             base_parameters:
               ENTITY: addresses
-            source: WORKSPACE
         - task_key: reconcile_addresses
           depends_on:
             - task_key: merge_addresses
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/05_silver_reconciliation
+            notebook_path: ../notebooks/05_silver_reconciliation.py
             base_parameters:
               ENTITY: addresses
               MODE: INCREMENTAL
-            source: WORKSPACE
         - task_key: watermark_addresses
           depends_on:
             - task_key: reconcile_addresses
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/08_watermark_update
+            notebook_path: ../notebooks/08_watermark_update.py
             base_parameters:
               ENTITY: addresses
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: classify_subscriptions
           depends_on:
             - task_key: reconcile_customers
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/06_cdc_classification
+            notebook_path: ../notebooks/06_cdc_classification.py
             base_parameters:
               ENTITY: subscriptions
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: merge_subscriptions
           depends_on:
             - task_key: classify_subscriptions
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/07_cdc_merge
+            notebook_path: ../notebooks/07_cdc_merge.py
             base_parameters:
               ENTITY: subscriptions
-            source: WORKSPACE
         - task_key: reconcile_subscriptions
           depends_on:
             - task_key: merge_subscriptions
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/05_silver_reconciliation
+            notebook_path: ../notebooks/05_silver_reconciliation.py
             base_parameters:
               ENTITY: subscriptions
               MODE: INCREMENTAL
-            source: WORKSPACE
         - task_key: watermark_subscriptions
           depends_on:
             - task_key: reconcile_subscriptions
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/08_watermark_update
+            notebook_path: ../notebooks/08_watermark_update.py
             base_parameters:
               ENTITY: subscriptions
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: classify_orders
           depends_on:
             - task_key: reconcile_customers
             - task_key: reconcile_addresses
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/06_cdc_classification
+            notebook_path: ../notebooks/06_cdc_classification.py
             base_parameters:
               ENTITY: orders
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: merge_orders
           depends_on:
             - task_key: classify_orders
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/07_cdc_merge
+            notebook_path: ../notebooks/07_cdc_merge.py
             base_parameters:
               ENTITY: orders
-            source: WORKSPACE
         - task_key: reconcile_orders
           depends_on:
             - task_key: merge_orders
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/05_silver_reconciliation
+            notebook_path: ../notebooks/05_silver_reconciliation.py
             base_parameters:
               ENTITY: orders
               MODE: INCREMENTAL
-            source: WORKSPACE
         - task_key: watermark_orders
           depends_on:
             - task_key: reconcile_orders
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/08_watermark_update
+            notebook_path: ../notebooks/08_watermark_update.py
             base_parameters:
               ENTITY: orders
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: classify_order_items
           depends_on:
             - task_key: reconcile_orders
             - task_key: reconcile_products
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/06_cdc_classification
+            notebook_path: ../notebooks/06_cdc_classification.py
             base_parameters:
               ENTITY: order_items
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: merge_order_items
           depends_on:
             - task_key: classify_order_items
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/07_cdc_merge
+            notebook_path: ../notebooks/07_cdc_merge.py
             base_parameters:
               ENTITY: order_items
-            source: WORKSPACE
         - task_key: reconcile_order_items
           depends_on:
             - task_key: merge_order_items
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/05_silver_reconciliation
+            notebook_path: ../notebooks/05_silver_reconciliation.py
             base_parameters:
               ENTITY: order_items
               MODE: INCREMENTAL
-            source: WORKSPACE
         - task_key: watermark_order_items
           depends_on:
             - task_key: reconcile_order_items
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/08_watermark_update
+            notebook_path: ../notebooks/08_watermark_update.py
             base_parameters:
               ENTITY: order_items
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: classify_payments
           depends_on:
             - task_key: reconcile_orders
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/06_cdc_classification
+            notebook_path: ../notebooks/06_cdc_classification.py
             base_parameters:
               ENTITY: payments
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: merge_payments
           depends_on:
             - task_key: classify_payments
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/07_cdc_merge
+            notebook_path: ../notebooks/07_cdc_merge.py
             base_parameters:
               ENTITY: payments
-            source: WORKSPACE
         - task_key: reconcile_payments
           depends_on:
             - task_key: merge_payments
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/05_silver_reconciliation
+            notebook_path: ../notebooks/05_silver_reconciliation.py
             base_parameters:
               ENTITY: payments
               MODE: INCREMENTAL
-            source: WORKSPACE
         - task_key: watermark_payments
           depends_on:
             - task_key: reconcile_payments
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/08_watermark_update
+            notebook_path: ../notebooks/08_watermark_update.py
             base_parameters:
               ENTITY: payments
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: classify_support_tickets
           depends_on:
             - task_key: reconcile_customers
             - task_key: reconcile_orders
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/06_cdc_classification
+            notebook_path: ../notebooks/06_cdc_classification.py
             base_parameters:
               ENTITY: support_tickets
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: merge_support_tickets
           depends_on:
             - task_key: classify_support_tickets
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/07_cdc_merge
+            notebook_path: ../notebooks/07_cdc_merge.py
             base_parameters:
               ENTITY: support_tickets
-            source: WORKSPACE
         - task_key: reconcile_support_tickets
           depends_on:
             - task_key: merge_support_tickets
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/05_silver_reconciliation
+            notebook_path: ../notebooks/05_silver_reconciliation.py
             base_parameters:
               ENTITY: support_tickets
               MODE: INCREMENTAL
-            source: WORKSPACE
         - task_key: watermark_support_tickets
           depends_on:
             - task_key: reconcile_support_tickets
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/08_watermark_update
+            notebook_path: ../notebooks/08_watermark_update.py
             base_parameters:
               ENTITY: support_tickets
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
         - task_key: customer_scd2_incremental
           depends_on:
             - task_key: watermark_customers
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/09_customer_scd2
+            notebook_path: ../notebooks/09_customer_scd2.py
             base_parameters:
               MODE: INCREMENTAL
-            source: WORKSPACE
         - task_key: gold_build
           depends_on:
             - task_key: customer_scd2_incremental
@@ -408,16 +365,14 @@ resources:
             - task_key: watermark_orders
             - task_key: watermark_support_tickets
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/10_gold_build
-            source: WORKSPACE
+            notebook_path: ../notebooks/10_gold_build.py
         - task_key: reconciliation_archive
           depends_on:
             - task_key: gold_build
           notebook_task:
-            notebook_path: /Workspace/Users/pavankumarverse@gmail.com/Customer 360 CDC Platform/11_reconciliation_archive
+            notebook_path: ../notebooks/11_reconciliation_archive.py
             base_parameters:
               PIPELINE_RUN_ID: "{{job.run_id}}"
-            source: WORKSPACE
       queue:
         enabled: true
       performance_target: PERFORMANCE_OPTIMIZED

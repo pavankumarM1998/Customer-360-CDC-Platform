@@ -1,0 +1,2 @@
+product_id,product_name,category,unit_price,currency,sku,status,created_at,updated_at
+PROD_0005,Automated Delta Optimization Agent,SOFTWARE,399.00,USD,SKU-SW-004,AVAILABLE,2024-02-01T00:00:00Z,2024-02-01T00:00:00Z

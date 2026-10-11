@@ -56,24 +56,14 @@ TABLES_TO_OPTIMIZE = [
 
 # COMMAND ----------
 
+optimization_results = []
+
 for table_name in TABLES_TO_OPTIMIZE:
-
     print()
-    print(
-        f"Checking {table_name}"
-    )
+    print(f"Checking {table_name}")
 
-# COMMAND ----------
-
-if not spark.catalog.tableExists(
-        table_name
-    ):
-
-        print(
-            f"SKIPPED: "
-            f"{table_name} does not exist."
-        )
-
+    if not spark.catalog.tableExists(table_name):
+        print(f"SKIPPED: {table_name} does not exist.")
         optimization_results.append(
             (
                 table_name,
@@ -82,21 +72,11 @@ if not spark.catalog.tableExists(
                 "SKIPPED_TABLE_MISSING"
             )
         )
+        continue
 
-row_count = (
-        spark.table(
-            table_name
-        )
-        .count()
-    )
-
-if row_count == 0:
-
-        print(
-            f"SKIPPED: "
-            f"{table_name} contains zero rows."
-        )
-
+    row_count = spark.table(table_name).count()
+    if row_count == 0:
+        print(f"SKIPPED: {table_name} contains zero rows.")
         optimization_results.append(
             (
                 table_name,
@@ -105,96 +85,43 @@ if row_count == 0:
                 "SKIPPED_EMPTY_TABLE"
             )
         )
+        continue
 
-detail_before = (
-        spark.sql(
-            f"""
-            DESCRIBE DETAIL
-            {table_name}
-            """
-        )
-        .first()
+    detail_before = spark.sql(f"DESCRIBE DETAIL {table_name}").first()
+    files_before = (
+        detail_before["numFiles"]
+        if "numFiles" in detail_before.asDict()
+        else None
     )
-
-files_before = (
-        detail_before[
-            "numFiles"
-        ]
-        if "numFiles"
-        in detail_before.asDict()
+    size_before = (
+        detail_before["sizeInBytes"]
+        if "sizeInBytes" in detail_before.asDict()
         else None
     )
 
-size_before = (
-        detail_before[
-            "sizeInBytes"
-        ]
-        if "sizeInBytes"
-        in detail_before.asDict()
+    print(f"Rows before: {row_count}")
+    print(f"Files before: {files_before}")
+
+    print(f"Running OPTIMIZE {table_name}")
+    spark.sql(f"OPTIMIZE {table_name}")
+
+    detail_after = spark.sql(f"DESCRIBE DETAIL {table_name}").first()
+    files_after = (
+        detail_after["numFiles"]
+        if "numFiles" in detail_after.asDict()
+        else None
+    )
+    size_after = (
+        detail_after["sizeInBytes"]
+        if "sizeInBytes" in detail_after.asDict()
         else None
     )
 
-print(
-        f"Rows before: "
-        f"{row_count:,}"
-    )
-
-print(
-        f"Files before: "
-        f"{files_before}"
-    )
-
-# COMMAND ----------
-
-print(
-        f"Running OPTIMIZE "
-        f"{table_name}"
-)
-
-spark.sql(
-        f"""
-        OPTIMIZE
-        {table_name}
-        """
-    )
-
-detail_after = (
-        spark.sql(
-            f"""
-            DESCRIBE DETAIL
-            {table_name}
-            """
-        )
-        .first()
-    )
-
-files_after = (
-        detail_after[
-            "numFiles"
-        ]
-        if "numFiles"
-        in detail_after.asDict()
-        else None
-    )
-
-size_after = (
-        detail_after[
-            "sizeInBytes"
-        ]
-        if "sizeInBytes"
-        in detail_after.asDict()
-        else None
-    )
-
-print(
-        f"Files after: "
-        f"{files_after}"
-    )
+    print(f"Files after: {files_after}")
 
     # ----------------------------------------------------------
     # Record result
     # ----------------------------------------------------------
-
     optimization_results.append(
         (
             table_name,

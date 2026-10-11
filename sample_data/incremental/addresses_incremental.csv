@@ -1,0 +1,2 @@
+address_id,customer_id,address_line1,city,state,postal_code,country,address_type,is_primary,created_at,updated_at
+ADDR_0006,CUST_0006,600 Peachtree St,Atlanta,GA,30308,USA,SHIPPING,true,2024-02-01T16:00:00Z,2024-02-01T16:00:00Z
