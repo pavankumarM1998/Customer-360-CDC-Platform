@@ -11,13 +11,11 @@ This project is built on **Databricks**, **Delta Lake**, **Unity Catalog**, and 
 ```
 Customer-360-CDC-Platform/
 │
-├── Customer 360 CDC Platform/       # End-to-end Python CDC & Data Pipeline Scripts (Current)
-├── Customer 360 & CDC Platform_old/ # Databricks Notebooks (Archived)
+├── Customer 360 CDC Platform/       # End-to-end Python CDC & Data Pipeline Scripts
 │
 ├── resources/                        # Databricks Asset Bundle (DAB) Workflow / Job YAMLs
 │   ├── customer360_initial_pipeline.job.yml      # End-to-end Initial Load Pipeline
-│   ├── customer360_incremental_pipeline.job.yml  # End-to-end CDC Incremental Pipeline
-│   └── old/                                      # Historical Job YAMLs (Archived)
+│   └── customer360_incremental_pipeline.job.yml  # End-to-end CDC Incremental Pipeline
 │
 ├── scripts/                          # Environment & Resource Setup Scripts
 │   ├── setup_folder_resources.py     # Unity Catalog Volume folder structure initializer
@@ -31,6 +29,8 @@ Customer-360-CDC-Platform/
 ├── databricks.yml                    # Databricks Asset Bundle Manifest
 └── README.md                         # Project Root Readme
 ```
+
+> ℹ️ **Legacy Archive**: Historical legacy Databricks notebooks and configurations are archived on the [`Old`](https://github.com/pavankumarM1998/Customer-360-CDC-Platform/tree/Old) branch.
 
 ---
 
