@@ -11,7 +11,8 @@ This project is built on **Databricks**, **Delta Lake**, **Unity Catalog**, and 
 ```
 Customer-360-CDC-Platform/
 │
-├── Customer 360 & CDC Platform/     # End-to-end Databricks Notebooks (Staging -> Gold)
+├── Customer 360 CDC Platform/       # End-to-end Python CDC & Data Pipeline Scripts (Current)
+├── Customer 360 & CDC Platform_old/ # Databricks Notebooks (Archived)
 │
 ├── resources/                        # Databricks Asset Bundle (DAB) Workflow / Job YAMLs
 │   ├── customer_staging.job.yml
